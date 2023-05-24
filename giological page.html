@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    #map {
+      height: 400px;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Person Tracking</h1>
+  
+  <div id="map"></div>
+
+  <script>
+    function initMap() {
+      // Specify the coordinates for the initial map center
+      var initialLocation = {lat: 37.7749, lng: -122.4194};
+      
+      // Create a map object and specify the DOM element for display
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: initialLocation,
+        zoom: 13
+      });
+
+      // Create a marker for the person's location
+      var marker = new google.maps.Marker({
+        position: initialLocation,
+        map: map,
+        title: 'Person'
+      });
+
+      // Update the marker position based on the person's current location
+      function updateMarkerPosition() {
+        var newLat = initialLocation.lat + Math.random() * 0.01 - 0.005;
+        var newLng = initialLocation.lng + Math.random() * 0.01 - 0.005;
+        var latLng = new google.maps.LatLng(newLat, newLng);
+        marker.setPosition(latLng);
+        map.panTo(latLng);
+      }
+
+      // Simulate the person's movement by updating the marker position
+      // with random coordinates every 3 seconds
+      setInterval(updateMarkerPosition, 3000);
+    }
+  </script>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+</body>
+</html>
